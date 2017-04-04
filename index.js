@@ -10,7 +10,8 @@ app.get('/yo',function(req, res){
 })
 
 app.get('*.json', function(req, res){
-    res.download('./users' + req.path, 'virus.exe'); //descargar un archivo con esta informacion y el 'virus.exe' nombre del archivo como ejecutable
+    res.download('./users' + req.path);
+    //res.download('./users' + req.path, 'virus.exe'); //descargar un archivo con esta informacion y el 'virus.exe' nombre del archivo como ejecutable
 })
 
 /* Methods for user data */
@@ -30,6 +31,10 @@ app.delete(function(req,res){
     var fp = getUserFilePath(req.params.username)
     fp.unlinkSync(fp) //delete the file
     res.sendStatus(200)
+})
+
+app.get('/error/:username', function(req, res){
+    res.status(404).send('No user named: ' + req.params.username + ' found')
 })
 
 var server = app.listen(3000, function() {
